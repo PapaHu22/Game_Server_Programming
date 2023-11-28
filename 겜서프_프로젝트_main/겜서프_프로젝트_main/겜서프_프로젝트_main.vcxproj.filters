@@ -24,6 +24,21 @@
     <ClCompile Include="game.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Maze1.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Maze2.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Maze3.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Maze4.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Trap.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="combat.h">

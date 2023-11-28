@@ -130,6 +130,11 @@
     <ClCompile Include="combat.c" />
     <ClCompile Include="game.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="Maze1.c" />
+    <ClCompile Include="Maze2.c" />
+    <ClCompile Include="Maze3.c" />
+    <ClCompile Include="Maze4.c" />
+    <ClCompile Include="Trap.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="combat.h" />

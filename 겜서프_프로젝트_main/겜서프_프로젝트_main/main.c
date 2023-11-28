@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "combat.h"
 #include "game.h"
-//#include <sys/ipc.h>
-//#include <sys/shm.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
 #include <sys/types.h>
 #include <stdlib.h>
 #include <math.h>
@@ -77,8 +77,18 @@ void field_map(Player* player) {
 int main() 
 {
 	int shmid;
-	//key_t key;
+	key_t key;
+	ShMEM* shmem; //공유메모리 요소(유저수, 현재 방 위치, 파티, 보스2페이즈 체력)
 	
+	key = ftok("/home/g_202010951/project_space", 1);
+	shmid = shmget(key, 1024, 0);
+	if (shmid == -1) {
+		perror("shmget");
+		exit(1);
+	}
+
+	shmem = (ShMEM*)shmat(shmid, NULL, 0);
+
 	Class Warrior; //전사, 탱
 	Class SwordsMan; //검사, 근딜
 	Class Priest; //성직자, 힐러
@@ -96,23 +106,20 @@ int main()
 	Archer.class_HP = 150;
 	Archer.class_OP = 100;
 
-	ShMEM shmem; //공유메모리 요소(유저수, 현재 방 위치, 파티, 보스2페이즈 체력)
-	
-	int Cr_Room = 0; //현재 방 위치(공유메모리)
-	int User_num = 0; // 유저수(공뮤메모리)
-	Party party; // 파티(공유메모리)
+
+	shmem->User_num = 3;
 	int you; // 당사자
 	
 	// 유저수가 
-	if (User_num != 1 && User_num != 2 && User_num != 3 && User_num != 4) {
-		User_num = 0; 
+	if (shmem->User_num != 1 && shmem->User_num != 2 && shmem->User_num != 3 && shmem->User_num != 4) {
+		shmem->User_num = 0;
 	}
 
 	//플레이어 참가
-	++User_num;
+	++shmem->User_num;
 	//만약 유저수가 4명을 넘을 경우 참가못하게 하고 종료
-	if (User_num > MAX_USER_NUM) {
-		User_num = 4;
+	if (shmem->User_num > MAX_USER_NUM) {
+		shmem->User_num = 4;
 		printf("이미 파티가 꽉찼습니다.");
 		return 1;
 	}
@@ -125,59 +132,64 @@ int main()
 
 	//직업선택
 	printf("직업을 선택하세요.\n");
-	printf("전사(1), 암살자(2), 성직자(3), 궁수(4)\n");
-	scanf("%d", &select_class);
-	switch (select_class) {
-	case 1:
-		player->class = Warrior;
-		player->HP = Warrior.class_HP;
-		player->OP = Warrior.class_OP;
-		break;
-	case 2:
-		player->class = SwordsMan;
-		player->HP = SwordsMan.class_HP;
-		player->OP = SwordsMan.class_OP;
-		break;
-	case 3:
-		player->class = Priest;
-		player->HP = Priest.class_HP;
-		player->OP = Priest.class_OP;
-		break;
-	case 4:
-		player->class = Archer;
-		player->HP = Archer.class_HP;
-		player->OP = Archer.class_OP;
-		break;
-	default:
-		printf("잘못된 입력입니다.");
+	while (true) {
+		printf("전사(1), 암살자(2), 성직자(3), 궁수(4)\n");
+		scanf("%d", &select_class);
+		switch (select_class) {
+		case 1:
+			player->class = Warrior;
+			player->HP = Warrior.class_HP;
+			player->OP = Warrior.class_OP;
+			break;
+		case 2:
+			player->class = SwordsMan;
+			player->HP = SwordsMan.class_HP;
+			player->OP = SwordsMan.class_OP;
+			break;
+		case 3:
+			player->class = Priest;
+			player->HP = Priest.class_HP;
+			player->OP = Priest.class_OP;
+			break;
+		case 4:
+			player->class = Archer;
+			player->HP = Archer.class_HP;
+			player->OP = Archer.class_OP;
+			break;
+		default:
+			printf("잘못된 입력입니다.");
+		}
+		ClearLineFromReadBuffer();
+		if (select_class == 1 || select_class == 2 || select_class == 3 || select_class == 4) {
+			break;
+		}
 	}
 
-	ClearLineFromReadBuffer();
 	system("cls");
 
-	Cr_Room++;
+	shmem->Cr_room++;
 	do {
-		if (Cr_Room == 1 || Cr_Room == 2) {
+		if (shmem->Cr_room == 1 || shmem->Cr_room == 2) {
 			field_map(player);
 			printf("필드맵을 클리어했습니다.");
-			Cr_Room++;
+			shmem->Cr_room++;
 		}
-		else if (Cr_Room == 3) {
-			//함정맵
+		else if (shmem->Cr_room== 3) {
+			trap(shmem->User_num);
 			printf("함정맵을 클리어했습니다.");
-			Cr_Room++;
+			shmem->Cr_room++;
 		}
-		else if(Cr_Room == 4) {
+		else if(shmem->Cr_room == 4) {
 			// 상점맵
 			printf("상점맵 이용");
-			Cr_Room++;
+			shmem->Cr_room++;
 		}
 		else {
 			//보스방
 			printf("보스를 클리어했습니다.");
-			Cr_Room++;
+			shmem->Cr_room++;
 		}
-	} while (player->HP > 0 && Cr_Room <= 5);
+	} while (player->HP > 0 && shmem->Cr_room <= 5);
 
 	free(player);
 	return 0;

@@ -22,7 +22,7 @@ typedef struct Player {
     Class class; //직업
     int HP; // 체력
     int OP; // 공격력
-    int Money; // 돈
+
 } Player;
 
 typedef struct Monster {
@@ -34,10 +34,21 @@ typedef struct Monster {
 } Monster;
 
 typedef struct Party {
+    int x;
+    int y;
     int Party_Coin; // 파티 돈
     int Party_OP_buff; // 파티 공격력
     int Party_HP_buff; // 파티 체력 버프
 }Party;
+
+typedef struct ShMEM {
+    struct Monster monster; // 몬스터 정보
+    int Host_HP; // 호스트 체력(호스트 체력이 0이 되면 게임오버)
+    int Cr_room; // 현재 방 위치
+    int User_num; // 유저수
+    struct Party party; // 파티 정보
+    int boss_phase2_HP; // 보스 2페이즈 체력 
+}ShMEM;
 
 // 함수 프로토타입 선언
 void draw_line();
