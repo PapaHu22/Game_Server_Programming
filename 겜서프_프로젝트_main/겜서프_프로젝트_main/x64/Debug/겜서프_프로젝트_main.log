@@ -1,0 +1,6 @@
+﻿  main.c
+C:\Users\USER\OneDrive\바탕 화면\대학생활\2학년 2학기\게임서버프로그래밍\겜서프프로젝트\겜서프_프로젝트_main\겜서프_프로젝트_main\main.c(68,13): warning C4098: 'field_map': 'void' 함수에서 값을 반환하고 있습니다.
+C:\Users\USER\OneDrive\바탕 화면\대학생활\2학년 2학기\게임서버프로그래밍\겜서프프로젝트\겜서프_프로젝트_main\겜서프_프로젝트_main\main.c(102,6): warning C4101: 'you' :참조되지 않은 지역 변수입니다.
+C:\Users\USER\OneDrive\바탕 화면\대학생활\2학년 2학기\게임서버프로그래밍\겜서프프로젝트\겜서프_프로젝트_main\겜서프_프로젝트_main\main.c(79,6): warning C4101: 'shmid' :참조되지 않은 지역 변수입니다.
+C:\Users\USER\OneDrive\바탕 화면\대학생활\2학년 2학기\게임서버프로그래밍\겜서프프로젝트\겜서프_프로젝트_main\겜서프_프로젝트_main\main.c(101,8): warning C4101: 'party' :참조되지 않은 지역 변수입니다.
+  겜서프_프로젝트_main.vcxproj -> C:\Users\USER\OneDrive\바탕 화면\대학생활\2학년 2학기\게임서버프로그래밍\겜서프프로젝트\겜서프_프로젝트_main\x64\Debug\겜서프_프로젝트_main.exe
