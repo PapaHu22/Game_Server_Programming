@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <stdbool.h>
 #define MAP_WIDTH 50
 #define MAP_HEIGHT 20
 #define ASCII_ART_SIZE 256 // 아스키 아트 배열 크기 정의
@@ -17,8 +18,6 @@ typedef struct Player_Class {
 
 // 플레이어 위치를 저장하기 위한 구조체
 typedef struct Player {
-    int x;
-    int y;
     Class class; //직업
     int HP; // 체력
     int OP; // 공격력
@@ -41,20 +40,38 @@ typedef struct Party {
     int Party_HP_buff; // 파티 체력 버프
 }Party;
 
+typedef struct BossMonster {
+    int x;
+    int y;
+    int Monster_HP; // 몬스터 체력
+    int Monster_OP; // 몬스터 공격력
+} BossMonster;
+
 typedef struct ShMEM {
+    bool game_ready; //
+    bool field_ready;
+    bool boos_ready;
     struct Monster monster; // 몬스터 정보
     int Host_HP; // 호스트 체력(호스트 체력이 0이 되면 게임오버)
     int Cr_room; // 현재 방 위치
     int User_num; // 유저수
     struct Party party; // 파티 정보
     int boss_phase2_HP; // 보스 2페이즈 체력 
+    int sum_boss_phase2_HP; //모든 보스분신  2페이즈체력 합 
+    bool checkin_1; // 입력 대기 체크
+    bool checkin_2;
+    bool checkin_3;
+    bool checkin_4;
+    struct BossMonster boss_monster; // 몬스터 정보
+    struct BossMonster boss_monster2; //phase2 boss_monster
+    struct BossMonster boss_monster3; //phase3 boss_monster
 }ShMEM;
 
 // 함수 프로토타입 선언
 void draw_line();
 void draw_map(char map[MAP_HEIGHT][MAP_WIDTH]);
-void draw_move(char input, Player* player, char map[MAP_HEIGHT][MAP_WIDTH], Monster* monster);
+void draw_move(char input, char map[MAP_HEIGHT][MAP_WIDTH]);
 void draw_attack(Player* player, Monster* monster);
-void initialize_map(char map[MAP_HEIGHT][MAP_WIDTH], Player* player);
-
+void initialize_map(char map[MAP_HEIGHT][MAP_WIDTH]);
+ShMEM* shm_get();
 #endif

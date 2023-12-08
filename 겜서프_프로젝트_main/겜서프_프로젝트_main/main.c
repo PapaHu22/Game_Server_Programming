@@ -7,71 +7,11 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdbool.h>
+#include <unistd.h>
 #pragma warning(disable:4996)
 
 
 #define MAX_USER_NUM 4
-
-
-
-
-void ClearLineFromReadBuffer(void)
-{
-	while (getchar() != '\n');
-}
-
-void field_map(Player* player) {
-	char map[MAP_HEIGHT][MAP_WIDTH];
-	Monster monster = { 10, 15, 100, 15, MONSTER_ART }; // 몬스터 초기 설정
-	char input;
-	bool inCombat = false; // 전투 상태 플래그
-
-	initialize_map(map, player);
-	map[monster.y][monster.x] = MONSTER_ICON; // 몬스터 위치 표시
-
-	while (1) {
-		system("cls"); // 화면 클리어
-		printf("현재 위치: 맵 이름\n"); // 맵 이름 출력
-		draw_line(); 
-		draw_map(map); // 맵 출력
-		draw_line();
-
-		if (!inCombat) {
-			printf("이동 WASD, Q 종료: ");
-			scanf_s(" %c", &input, 1);
-		}
-
-		// 전투 상태 결정
-		bool isNearMonster = abs(player->x - monster.x) <= 1 && abs(player->y - monster.y) <= 1;
-
-		if (!inCombat && isNearMonster) {
-			inCombat = true;
-			printf("%s\n", MONSTER_ART); // 몬스터 아스키 아트 출력
-			printf("Your Health: %d, Monster's Health: %d\n", player->HP, monster.Monster_HP);
-			start_combat(player, &monster); // 전투 시작
-			if (monster.Monster_HP <= 0) {
-				map[monster.y][monster.x] = ' '; // 몬스터 위치 지우기
-				monster.y = -1;
-				monster.x = -1;
-				inCombat = false; // 전투 상태 종료
-			}
-		}
-		else {
-			switch (input) {
-			case 'w': // 위로 이동
-			case 'a': // 왼쪽으로 이동
-			case 's': // 아래로 이동
-			case 'd': // 오른쪽으로 이동
-				draw_move(input, player, map, &monster);
-				break;
-			case 'q': // 게임 종료
-				return 0;
-			default:
-				printf("조작불가!\n");
-			}
-		}
-	}
-}
 
 
 int main() 
@@ -80,14 +20,20 @@ int main()
 	key_t key;
 	ShMEM* shmem; //공유메모리 요소(유저수, 현재 방 위치, 파티, 보스2페이즈 체력)
 	
-	key = ftok("/home/g_202010951/project_space", 1);
-	shmid = shmget(key, 1024, 0);
+	key = ftok("/home/g_202211077/Teamproject/Boss", 211);
+	shmid = shmget(key, 1024, IPC_CREAT | 0666);
 	if (shmid == -1) {
 		perror("shmget");
 		exit(1);
 	}
 
 	shmem = (ShMEM*)shmat(shmid, NULL, 0);
+
+	shmem->User_num = 1;
+	shmem->Cr_room = 1;
+	shmem->game_ready = false;
+	shmem->field_ready = false;
+	shmem->boos_ready = false;
 
 	Class Warrior; //전사, 탱
 	Class SwordsMan; //검사, 근딜
@@ -105,15 +51,8 @@ int main()
 
 	Archer.class_HP = 150;
 	Archer.class_OP = 100;
-
-
-	shmem->User_num = 3;
-	int you; // 당사자
 	
-	// 유저수가 
-	if (shmem->User_num != 1 && shmem->User_num != 2 && shmem->User_num != 3 && shmem->User_num != 4) {
-		shmem->User_num = 0;
-	}
+	int you = shmem->User_num; // 당사자
 
 	//플레이어 참가
 	++shmem->User_num;
@@ -125,8 +64,11 @@ int main()
 	}
 
 	Player* player = (Player*)malloc(sizeof(Player));
-	player->x = 0;
-	player->y = MAP_HEIGHT;
+
+	shmem->party.x = 0;
+	shmem->party.y = MAP_HEIGHT;
+
+	shmem->Cr_room = 1;
 
 	int select_class;
 
@@ -165,18 +107,39 @@ int main()
 		}
 	}
 
-	system("cls");
+	shmem->Host_HP = player->HP;
 
-	shmem->Cr_room++;
+	//화면 초기화
+	int game_ready;
+	int field_ready;
+	printf("던전을 탐험할 준비가 되었습니까?(1번 입력시 시작)"); // 호스트 코드 전용
+	scanf("%d", &game_ready);
+	if (game_ready == 1) {
+		printf("탐험을 시작합니다.");
+		shmem->game_ready = true;
+	}
+
 	do {
 		if (shmem->Cr_room == 1 || shmem->Cr_room == 2) {
-			field_map(player);
+			printf("필드방%d 앞입니다. 진입하시겠습니까?(1번 입장시 진입)", shmem->Cr_room);
+			scanf("%d", &field_ready);
+			if (field_ready == 1) {
+				shmem->field_ready = true;
+			}
+			field_map(player, you);
+			if (shmem->Host_HP >= 0) {
+				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
+			}
 			printf("필드맵을 클리어했습니다.");
 			shmem->Cr_room++;
 		}
 		else if (shmem->Cr_room== 3) {
+			printf("함정방에 입장하시겠습니까?");
 			trap(shmem->User_num);
 			printf("함정맵을 클리어했습니다.");
+			if (shmem->Host_HP >= 0) {
+				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
+			}
 			shmem->Cr_room++;
 		}
 		else if(shmem->Cr_room == 4) {
@@ -186,10 +149,14 @@ int main()
 		}
 		else {
 			//보스방
+			if (shmem->Host_HP >= 0) {
+				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐사 실패");
+			}
+			//화면 초기화?
 			printf("보스를 클리어했습니다.");
 			shmem->Cr_room++;
 		}
-	} while (player->HP > 0 && shmem->Cr_room <= 5);
+	} while (shmem->Cr_room <= 5);
 
 	free(player);
 	return 0;

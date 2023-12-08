@@ -1,0 +1,143 @@
+#include <stdio.h>
+#include "combat.h"
+#include "game.h"
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/types.h>
+#include <stdlib.h>
+#include <math.h>
+#include <stdbool.h>
+#include <unistd.h>
+#pragma warning(disable:4996)
+
+
+#define MAX_USER_NUM 4
+
+
+int main() 
+{
+	int shmid;
+	key_t key;
+	ShMEM* shmem; //공유메모리 요소(유저수, 현재 방 위치, 파티, 보스2페이즈 체력)
+	
+	key = ftok("/home/g_202211077/Teamproject/Boss", 211);
+	shmid = shmget(key, 1024, 0);
+	if (shmid == -1) {
+		perror("shmget");
+		exit(1);
+	}
+
+	shmem = (ShMEM*)shmat(shmid, NULL, 0);
+
+	shmem->User_num++;
+	if (shmem->User_num >= 5) {
+		printf("파티가 꽉찼습니다.\n");
+		shmem->User_num = 4;
+		return 1;
+	}
+
+	Class Warrior; //전사, 탱
+	Class SwordsMan; //검사, 근딜
+	Class Priest; //성직자, 힐러
+	Class Archer; // 궁수, 원딜
+
+	Warrior.class_HP = 500;
+	Warrior.class_OP = 50;
+	
+	SwordsMan.class_HP = 250;
+	SwordsMan.class_OP = 70;
+
+	Priest.class_HP = 200;
+	Priest.class_OP = 30;
+
+	Archer.class_HP = 150;
+	Archer.class_OP = 100;
+
+
+	int you = shmem->User_num; // 유저번호 부여
+	
+
+	Player* player = (Player*)malloc(sizeof(Player));
+	player->x = 0;
+	player->y = MAP_HEIGHT;
+
+	int select_class;
+
+	//직업선택
+	printf("직업을 선택하세요.\n");
+	while (true) {
+		printf("전사(1), 암살자(2), 성직자(3), 궁수(4)\n");
+		scanf("%d", &select_class);
+		switch (select_class) {
+		case 1:
+			player->class = Warrior;
+			player->HP = Warrior.class_HP;
+			player->OP = Warrior.class_OP;
+			break;
+		case 2:
+			player->class = SwordsMan;
+			player->HP = SwordsMan.class_HP;
+			player->OP = SwordsMan.class_OP;
+			break;
+		case 3:
+			player->class = Priest;
+			player->HP = Priest.class_HP;
+			player->OP = Priest.class_OP;
+			break;
+		case 4:
+			player->class = Archer;
+			player->HP = Archer.class_HP;
+			player->OP = Archer.class_OP;
+			break;
+		default:
+			printf("잘못된 입력입니다.");
+		}
+		ClearLineFromReadBuffer();
+		if (select_class == 1 || select_class == 2 || select_class == 3 || select_class == 4) {
+			break;
+		}
+	}
+
+	while (true) {
+		printf("파티장의 시작을 기다리고 있습니다.");
+		//화면 초기화
+		if (shmem->game_ready) {
+			printf("파티장이 시작하였습니다.");
+			break;
+		}
+	}
+
+
+	do {
+		if (shmem->Cr_room == 1 || shmem->Cr_room == 2) {
+			printf("필드방%d 앞입니다. 파티장의 시작을 대기합니다.\n", shmem->Cr_room);
+			field_map(player);
+			if (shmem->Host_HP >= 0) {
+				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
+			}
+			printf("필드맵을 클리어했습니다.");
+		}
+		else if (shmem->Cr_room== 3) {
+			trap(shmem->User_num);
+			if (shmem->Host_HP >= 0) {
+				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
+			}
+			printf("함정맵을 클리어했습니다.");
+		}
+		else if(shmem->Cr_room == 4) {
+			// 상점맵
+			printf("상점맵 이용");
+		}
+		else {
+			//보스방
+			if (shmem->Host_HP >= 0) {
+				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
+			}
+			printf("보스를 클리어했습니다.");
+		}
+	} while (shmem->Cr_room <= 5);
+
+	free(player);
+	return 0;
+}
+
