@@ -103,7 +103,7 @@ int main() {
             break;
         default:
             printf("키를 잘못 입력했습니다. 다시 입력하세요.");
-            Sleep(1000);
+            sleep(1);
             break;
         }
 

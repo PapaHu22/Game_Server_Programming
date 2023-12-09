@@ -1,6 +1,7 @@
 // game.c
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
@@ -68,12 +69,10 @@ void initialize_map(char map[MAP_HEIGHT][MAP_WIDTH]) {
 
 
 
-void ClearLineFromReadBuffer(void)
+void ClearLineFromReadBuffer()
 {
     int c;
-    while ((c = getchar()) != '\n' && c != EOF) {
-
-    }
+	while ((c = getchar()) != '\n' && c != EOF);
 }
 
 void field_map(Player* player, int you) {
@@ -99,7 +98,7 @@ void field_map(Player* player, int you) {
 
 		if (!inCombat) {
 			printf("이동 WASD, Q 종료: ");
-			scanf_s(" %c", &input, 1);
+			scanfs(" %c", &input, 1);
             shmem->input = input;
 		}
 
@@ -127,7 +126,7 @@ void field_map(Player* player, int you) {
 			case 'a': // 왼쪽으로 이동
 			case 's': // 아래로 이동
 			case 'd': // 오른쪽으로 이동
-				draw_move(shmem->input, player, map);
+				draw_move(shmem->input, map);
 				break;
 			case 'q': // 게임 종료
 				return 0;
@@ -165,7 +164,7 @@ void boss_room(Player* player, int you) {
 
 		if (!inCombat) {
 			printf("이동 WASD, Q 종료: ");
-			scanf_s(" %c", &input, 1);
+			scanfs(" %c", &input, 1);
 			shmem->input = input;
 		}
 
@@ -211,7 +210,7 @@ void boss_room(Player* player, int you) {
 			case 'a': // 왼쪽으로 이동
 			case 's': // 아래로 이동
 			case 'd': // 오른쪽으로 이동
-				draw_move(shmem->input, player, map);
+				draw_move(shmem->input, map);
 				break;
 			case 'q': // 게임 종료
 				return 0;
@@ -246,7 +245,7 @@ void shop() {
 		printf("포션 구입(파티원 전체 체력 20 회복) <A> [20코인]\n");
 		printf("공격력 강화 주문서 구입(파티원 전체 공격력 10 상승) <B> [100코인]\n");
 		printf("파티원 전체 최대 체력 상승 구입(파티원 전체 최대 체력 2 배 상승) <C> [200코인]\n");
-		scanf_s(" %c", &input, 1);
+		scanfs(" %c", &input, 1);
 
 		switch (input) {
 		case 'A':

@@ -78,8 +78,11 @@ typedef struct ShMEM {
 
 // 함수 프로토타입 선언
 void draw_line();
+void trap(int you);
+void shop();
+void ClearLineFromReadBuffer();
 void field_map(Player* player, int you);
-void boss_map(Player* player, int you);
+void boss_room(Player* player, int you);
 void draw_map(char map[MAP_HEIGHT][MAP_WIDTH]);
 void draw_move(char input, char map[MAP_HEIGHT][MAP_WIDTH]);
 void draw_attack(Player* player, Monster* monster);
