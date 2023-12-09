@@ -25,9 +25,10 @@ void draw_map(char map[MAP_HEIGHT][MAP_WIDTH]) {
 }
 
 //움직임
-void draw_move(char input, Player* player, char map[MAP_HEIGHT][MAP_WIDTH], Monster* monster) {
-    int new_x = player->x;
-    int new_y = player->y;
+void draw_move(char input, char map[MAP_HEIGHT][MAP_WIDTH]) {
+    ShMEM* shmem = shm_get();
+    int new_x = shmem->party.x;
+    int new_y = shmem->party.y;
 
     switch (input) {
     case 'w': new_y--; break;
@@ -40,25 +41,26 @@ void draw_move(char input, Player* player, char map[MAP_HEIGHT][MAP_WIDTH], Mons
         return;
     }
 
-    if (new_x == monster->x && new_y == monster->y) {
+    if (new_x == shmem->monster.x && new_y == shmem->monster.y) {
         return;
     }
 
-    map[player->y][player->x] = ' '; // 이전 플레이어 위치 지우기
-    player->x = new_x;
-    player->y = new_y;
-    map[player->y][player->x] = PLAYER_ICON; // 새 위치에 플레이어 표시
+    map[shmem->party.x][shmem->party.x] = ' '; // 이전 플레이어 위치 지우기
+    shmem->party.x = new_x;
+    shmem->party.y = new_y;
+    map[shmem->party.x][shmem->party.y] = PLAYER_ICON; // 새 위치에 플레이어 표시
 }
 
-void initialize_map(char map[MAP_HEIGHT][MAP_WIDTH], Player* player) {
+void initialize_map(char map[MAP_HEIGHT][MAP_WIDTH]) {
+    ShMEM* shmem = shm_get();
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
             map[y][x] = ' ';
         }
     }
-    player->x = 0;
-    player->y = MAP_HEIGHT / 2;
-    map[player->y][player->x] = PLAYER_ICON;
+    shmem->party.x = 0;
+    shmem->party.y = MAP_HEIGHT / 2;
+    map[shmem->party.x][shmem->party.y] = PLAYER_ICON;
 }
 
 
@@ -67,60 +69,70 @@ void initialize_map(char map[MAP_HEIGHT][MAP_WIDTH], Player* player) {
 
 void ClearLineFromReadBuffer(void)
 {
-	while (getchar() != '\n');
+    while (getchar() != '\n');
 }
 
-void field_map(Player* player) {
-	char map[MAP_HEIGHT][MAP_WIDTH];
-	Monster monster = { 10, 15, 100, 15, MONSTER_ART }; // 몬스터 초기 설정
-	char input;
-	bool inCombat = false; // 전투 상태 플래그
+void field_map(Player* player, int you) {
+    ShMEM* shmem = shm_get();
+    char map[MAP_HEIGHT][MAP_WIDTH];
+    shmem->monster.x = 10; //{ 10, 15, 100, 15, MONSTER_ART }; // 몬스터 초기 설정
+    shmem->monster.y = 15;
+    shmem->monster.Monster_HP = 100;
+    shmem->monster.Monster_OP = 15;
+    shmem->monster.ascii_art[0] = MONSTER_ART;
+    char input;
+    bool inCombat = false; // 전투 상태 플래그
 
-	initialize_map(map, player);
-	map[monster.y][monster.x] = MONSTER_ICON; // 몬스터 위치 표시
+    initialize_map(map);
+    map[shmem->monster.y][shmem->monster.x] = MONSTER_ICON; // 몬스터 위치 표시
 
-	while (1) {
-		system("cls"); // 화면 클리어
-		printf("현재 위치: 맵 이름\n"); // 맵 이름 출력
-		draw_line();
-		draw_map(map); // 맵 출력
-		draw_line();
+    while (1) {
+        cls("clear") // 화면 클리어
+        printf("현재 위치: 맵 이름\n"); // 맵 이름 출력
+        draw_line();
+        draw_map(map); // 맵 출력
+        draw_line();
 
-		if (!inCombat) {
-			printf("이동 WASD, Q 종료: ");
-			scanf_s(" %c", &input, 1);
-		}
+        if (!inCombat) {
+            printf("파티장이 파티를 이동 중입니다.\n");
+        }
 
-		// 전투 상태 결정
-		bool isNearMonster = abs(player->x - monster.x) <= 1 && abs(player->y - monster.y) <= 1;
+        // 전투 상태 결정
+        bool isNearMonster = abs(shmem->party.x - shmem->monster.x) <= 1 && abs(shmem->party.y - shmem->monster.y) <= 1;
 
-		if (!inCombat && isNearMonster) {
-			inCombat = true;
-			printf("%s\n", MONSTER_ART); // 몬스터 아스키 아트 출력
-			printf("Your Health: %d, Monster's Health: %d\n", player->HP, monster.Monster_HP);
-			start_combat(player, &monster); // 전투 시작
-			if (monster.Monster_HP <= 0) {
-				map[monster.y][monster.x] = ' '; // 몬스터 위치 지우기
-				monster.y = -1;
-				monster.x = -1;
-				inCombat = false; // 전투 상태 종료
-			}
-		}
-		else {
-			switch (input) {
-			case 'w': // 위로 이동
-			case 'a': // 왼쪽으로 이동
-			case 's': // 아래로 이동
-			case 'd': // 오른쪽으로 이동
-				draw_move(input, player, map, &monster);
-				break;
-			case 'q': // 게임 종료
-				return 0;
-			default:
-				printf("조작불가!\n");
-			}
-		}
-	}
+        if (!inCombat && isNearMonster) {
+            inCombat = true;
+            printf("%s\n", MONSTER_ART); // 몬스터 아스키 아트 출력
+            printf("Your Health: %d, Monster's Health: %d\n", player->HP, shmem->monster.Monster_HP);
+            start_combat(player, you); // 전투 시작
+            if (shmem->Host_HP <= 0) {
+                break;
+            }
+            if (player->HP <= 0) {
+                break;
+            }
+            if (shmem->monster.Monster_HP <= 0) {
+                map[shmem->monster.x][shmem->monster.y] = ' '; // 몬스터 위치 지우기
+                shmem->monster.y = -1;
+                shmem->monster.x = -1;
+                inCombat = false; // 전투 상태 종료
+            }
+        }
+        else {
+            switch (input) {
+            case 'w': // 위로 이동
+            case 'a': // 왼쪽으로 이동
+            case 's': // 아래로 이동
+            case 'd': // 오른쪽으로 이동
+                draw_move(input, player, map);
+                break;
+            case 'q': // 게임 종료
+                return 0;
+            default:
+                printf("조작불가!\n");
+            }
+        }
+    }
 }
 
 ShMEM* shm_get() {

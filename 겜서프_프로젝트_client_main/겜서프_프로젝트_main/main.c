@@ -29,6 +29,11 @@ int main()
 
 	shmem = (ShMEM*)shmat(shmid, NULL, 0);
 
+	if (shmem->game_ready) {
+		printf("이미 이 파티는 던전 탐사를 시작했습니다.");
+		return 2;
+	}
+
 	shmem->User_num++;
 	if (shmem->User_num >= 5) {
 		printf("파티가 꽉찼습니다.\n");
@@ -100,7 +105,7 @@ int main()
 
 	while (true) {
 		printf("파티장의 시작을 기다리고 있습니다.");
-		//화면 초기화
+		cls("clear");
 		if (shmem->game_ready) {
 			printf("파티장이 시작하였습니다.");
 			break;
@@ -110,17 +115,32 @@ int main()
 
 	do {
 		if (shmem->Cr_room == 1 || shmem->Cr_room == 2) {
-			printf("필드방%d 앞입니다. 파티장의 시작을 대기합니다.\n", shmem->Cr_room);
+			printf("문 앞에 있습니다. 파티장의 시작을 대기합니다.\n", shmem->Cr_room);
+			while (1) {
+				if (shmem->field_ready) {
+					break;
+				}
+			}
 			field_map(player);
+			sleep(1);
 			if (shmem->Host_HP >= 0) {
 				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
+				break;
 			}
 			printf("필드맵을 클리어했습니다.");
 		}
 		else if (shmem->Cr_room== 3) {
+			printf("문 앞에 있습니다. 파티장의 시작을 대기합니다.\n", shmem->Cr_room);
+			while (1) {
+				if (shmem->field_ready) {
+					break;
+				}
+			}
 			trap(shmem->User_num);
+			sleep(1);
 			if (shmem->Host_HP >= 0) {
 				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
+				break;
 			}
 			printf("함정맵을 클리어했습니다.");
 		}
@@ -132,8 +152,17 @@ int main()
 			//보스방
 			if (shmem->Host_HP >= 0) {
 				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
+				break;
 			}
+			cls("clear");
 			printf("보스를 클리어했습니다.");
+			sleep(1);
+		}
+
+		if (player->HP <= 0) {
+			printf("당신은 탈락했습니다.\n");
+			shmem->User_num--;
+			break;
 		}
 	} while (shmem->Cr_room <= 5);
 

@@ -87,7 +87,7 @@ void field_map(Player* player, int you) {
 	map[shmem->monster.y][shmem->monster.x] = MONSTER_ICON; // 몬스터 위치 표시
 
 	while (1) {
-		system("cls"); // 화면 클리어
+		cls("clear") // 화면 클리어
 		printf("현재 위치: 맵 이름\n"); // 맵 이름 출력
 		draw_line();
 		draw_map(map); // 맵 출력
@@ -109,10 +109,10 @@ void field_map(Player* player, int you) {
             if (shmem->Host_HP <= 0) {
                 break;
             }
-			if (monster.Monster_HP <= 0) {
-				map[monster.y][monster.x] = ' '; // 몬스터 위치 지우기
-				monster.y = -1;
-				monster.x = -1;
+			if (shmem->monster.Monster_HP <= 0) {
+				map[shmem->monster.x][shmem->monster.y] = ' '; // 몬스터 위치 지우기
+				shmem->monster.y = -1;
+				shmem->monster.x = -1;
 				inCombat = false; // 전투 상태 종료
 			}
 		}
@@ -122,7 +122,7 @@ void field_map(Player* player, int you) {
 			case 'a': // 왼쪽으로 이동
 			case 's': // 아래로 이동
 			case 'd': // 오른쪽으로 이동
-				draw_move(input, player, map, &monster);
+				draw_move(input, player, map);
 				break;
 			case 'q': // 게임 종료
 				return 0;
