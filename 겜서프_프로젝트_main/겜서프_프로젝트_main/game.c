@@ -8,6 +8,12 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include "game.h"
+
+
+#define ROWS 10
+#define COLS 20
+
+
 //line 따로 만듬
 void draw_line() {
     for (int i = 0; i < MAP_WIDTH; i++) {
@@ -71,6 +77,41 @@ void alarmHandler(int signo) {
 	printf("시간안에 탈출을 못하였습니다. 강제 전이\n");
 	exit(0);
 }
+
+void printMaze(int* playerRow, int* playerCol, char maze[ROWS][COLS]) {
+	system("clear");
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS; j++) {
+			if (i >= playerRow - 1 && i <= playerRow + 1 && j >= playerCol - 1 && j <= playerCol + 1)
+			{
+				printf("%c ", maze[i][j]);
+			}
+			else
+			{
+				printf("  ");
+			}
+		}
+		printf("\n");
+	}
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS; j++) {
+			printf("%c ", maze[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+// 플레이어 이동 함수
+void movePlayer(int newRow, int newCol, int* playerRow, int* playerCol, char maze[ROWS][COLS]) {
+	// 이동하려는 위치가 벽이 아니라면 이동
+	if (maze[newRow][newCol] != '#') {
+		maze[*playerRow][*playerCol] = ' '; // 이전 위치를 비움
+		*playerRow = newRow;
+		*playerCol = newCol;
+		maze[*playerRow][*playerCol] = 'P'; // 새로운 위치에 플레이어 표시
+	}
+}
+
 
 
 void ClearLineFromReadBuffer()

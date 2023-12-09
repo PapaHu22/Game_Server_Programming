@@ -11,6 +11,11 @@
 #define MONSTER_ICON '&'
 #define MONSTER_ART "  /\\_/\\\n ( o.o )\n  > ^ <" //몬스터 아스키 아트
 
+
+#define ROWS 10
+#define COLS 20
+
+
 typedef struct Player_Class {
     int class_HP; // 직업 체력
     int class_OP; // 직업 공격력
@@ -78,6 +83,8 @@ typedef struct ShMEM {
 
 // 함수 프로토타입 선언
 void alarmHandler(int signo);
+void printMaze(int* playerRow, int* playerCol, char maze[ROWS][COLS]);
+void movePlayer(int newRow, int newCol, int* playerRow, int* playerCol, char maze[ROWS][COLS]);
 void draw_line();
 void trap(int you);
 void shop();
