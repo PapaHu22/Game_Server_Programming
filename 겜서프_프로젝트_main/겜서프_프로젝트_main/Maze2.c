@@ -12,13 +12,6 @@
 // 미로 배열
 
 
-
-
-void alarmHandler(int signo) {
-    printf("시간안에 탈출을 못하였습니다. 강제 전이\n");
-    exit(0);
-}
-
 // 미로를 출력하는 함수
 
 
