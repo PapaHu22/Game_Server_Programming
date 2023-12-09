@@ -132,6 +132,9 @@ void field_map(Player* player, int you) {
                 printf("조작불가!\n");
             }
         }
+        if (shmem->monster.Monster_HP <= 0) {
+            return;
+        }
     }
 }
 
@@ -145,7 +148,7 @@ void boss_room(Player* player, int you) {
     shmem->boss_monster2.Monster_OP = 10;
     shmem->boss_monster2.Monster_HP = 100;
     shmem->boss_monster3.Monster_OP = 25;
-    shmem->boss_monster3.Monster_HP = 2000;
+    shmem->boss_monster3.Monster_HP = 500;
 
     char input;
     bool inCombat = false; // 전투 상태 플래그
@@ -165,7 +168,7 @@ void boss_room(Player* player, int you) {
         }
 
         // 전투 상태 결정
-        bool isNearMonster = abs(shmem->party.x - shmem->monster.x) <= 1 && abs(shmem->party.y - shmem->monster.y) <= 1;
+        bool isNearMonster = abs(shmem->party.x - shmem->boss_x) <= 1 && abs(shmem->party.y - shmem->boss_y) <= 1;
 
         if (!inCombat && isNearMonster) {
             inCombat = true;
@@ -213,6 +216,9 @@ void boss_room(Player* player, int you) {
             default:
                 printf("조작불가!\n");
             }
+        }
+        if (shmem->boss_monster3.Monster_HP <= 0) {
+            return 0;
         }
     }
 

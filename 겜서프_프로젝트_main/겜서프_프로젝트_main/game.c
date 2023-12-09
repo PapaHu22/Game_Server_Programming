@@ -52,11 +52,11 @@ void draw_move(char input, char map[MAP_HEIGHT][MAP_WIDTH]) {
         return;
     }
 
-    map[shmem->party.x][shmem->party.x] = ' '; // 이전 플레이어 위치 지우기
+    map[shmem->party.y][shmem->party.x] = ' '; // 이전 플레이어 위치 지우기
 	sleep(1);
     shmem->party.x = new_x;
     shmem->party.y = new_y;
-    map[shmem->party.x][shmem->party.y] = PLAYER_ICON; // 새 위치에 플레이어 표시
+    map[shmem->party.y][shmem->party.x] = PLAYER_ICON; // 새 위치에 플레이어 표시
 }
 
 void initialize_map(char map[MAP_HEIGHT][MAP_WIDTH]) {
@@ -68,7 +68,7 @@ void initialize_map(char map[MAP_HEIGHT][MAP_WIDTH]) {
     }
     shmem->party.x = 0;
     shmem->party.y = MAP_HEIGHT / 2;
-    map[shmem->party.x][shmem->party.y] = PLAYER_ICON;
+    map[shmem->party.y][shmem->party.x] = PLAYER_ICON;
 }
 
 
@@ -159,7 +159,7 @@ void field_map(Player* player, int you) {
                 break;
             }
 			if (shmem->monster.Monster_HP <= 0) {
-				map[shmem->monster.x][shmem->monster.y] = ' '; // 몬스터 위치 지우기
+				map[shmem->monster.y][shmem->monster.x] = ' '; // 몬스터 위치 지우기
 				shmem->monster.y = -1;
 				shmem->monster.x = -1;
 				inCombat = false; // 전투 상태 종료
@@ -179,6 +179,9 @@ void field_map(Player* player, int you) {
 				printf("조작불가!\n");
 			}
 		}
+		if (shmem->monster.Monster_HP <= 0) {
+			return;
+		}
 	}
 }
 
@@ -192,13 +195,13 @@ void boss_room(Player* player, int you) {
 	shmem->boss_monster2.Monster_OP = 10;
 	shmem->boss_monster2.Monster_HP = 100;
 	shmem->boss_monster3.Monster_OP = 25;
-	shmem->boss_monster3.Monster_HP = 2000;
+	shmem->boss_monster3.Monster_HP = 500;
 
 	char input;
 	bool inCombat = false; // 전투 상태 플래그
 
 	initialize_map(map);
-	map[shmem->boss_x][shmem->boss_y] = MONSTER_ICON; // 몬스터 위치 표시
+	map[shmem->boss_y][shmem->boss_x] = MONSTER_ICON; // 몬스터 위치 표시
 
 	while (1) {
 		system("clear"); // 화면 클리어
@@ -208,13 +211,13 @@ void boss_room(Player* player, int you) {
 		draw_line();
 
 		if (!inCombat) {
-			printf("이동 WASD, Q 종료: ");
+			printf("이동 WASD ");
 			scanf(" %c", &input, 1);
 			shmem->input = input;
 		}
 
 		// 전투 상태 결정
-		bool isNearMonster = abs(shmem->party.x - shmem->monster.x) <= 1 && abs(shmem->party.y - shmem->monster.y) <= 1;
+		bool isNearMonster = abs(shmem->party.x - shmem->boss_x) <= 1 && abs(shmem->party.y - shmem->boss_y) <= 1;
 
 		if (!inCombat && isNearMonster) {
 			inCombat = true;
@@ -243,7 +246,7 @@ void boss_room(Player* player, int you) {
 
 			}
 			if (shmem->boss_monster3.Monster_HP <= 0) {
-				map[shmem->boss_x][shmem->boss_y] = ' '; // 몬스터 위치 지우기
+				map[shmem->boss_y][shmem->boss_x] = ' '; // 몬스터 위치 지우기
 				shmem->boss_x = -1;
 				shmem->boss_y = -1;
 				inCombat = false; // 전투 상태 종료
@@ -257,11 +260,14 @@ void boss_room(Player* player, int you) {
 			case 'd': // 오른쪽으로 이동
 				draw_move(shmem->input, map);
 				break;
-			case 'q': // 게임 종료
-				return 0;
+			//case 'q': // 게임 종료
+				//return 0;
 			default:
 				printf("조작불가!\n");
 			}
+		}
+		if (shmem->boss_monster3.Monster_HP <= 0) {
+			return;
 		}
 	}
 
@@ -287,6 +293,7 @@ void shop() {
 	shmem->MAX_HP_UP = 0;
 
 	while (shmem->party.Party_Coin > 0) {
+		printf("현재 코인 : %d", shmem->party.Party_Coin);
 		printf("포션 구입(파티원 전체 체력 20 회복) <A> [20코인]\n");
 		printf("공격력 강화 주문서 구입(파티원 전체 공격력 10 상승) <B> [100코인]\n");
 		printf("파티원 전체 최대 체력 상승 구입(파티원 전체 최대 체력 2 배 상승) <C> [200코인]\n");
@@ -294,14 +301,17 @@ void shop() {
 
 		switch (input) {
 		case 'A':
+			printf("포션 구매\n");
 			shmem->Potion++;
 			shmem->party.Party_Coin -= 20;
 			break;
 		case 'B':
+			printf("공격력 강화 구매 구매\n");
 			shmem->OP_UP++;
 			shmem->party.Party_Coin -= 100;
 			break;
 		case 'C':
+			printf("최대 체력 상스 구매\n");
 			shmem->MAX_HP_UP++;
 			shmem->party.Party_Coin -= 200;
 			break;

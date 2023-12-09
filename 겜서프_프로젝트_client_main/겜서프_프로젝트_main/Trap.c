@@ -18,16 +18,16 @@ void trap(int you)
             switch (getpid() % 4) //pid번호로 함정방 랜덤하게 배치
             {
             case 0:
-                execlp("Maze1", "Maze1", NULL);
+                maze1();
                 break;
             case 1:
-                execlp("Maze2", "Maze2", NULL);
+                maze2();
                 break;
             case 2:
-                execlp("Maze3", "Maze3", NULL);
+                maze3();
                 break;
             case 3:
-                execlp("Maze4", "Maze4", NULL);
+                maze4();
                 break;
             }
             exit(1);
@@ -44,16 +44,16 @@ void trap(int you)
                 switch (getpid() % 4) //pid번호로 함정방 랜덤하게 배치
                 {
                 case 0:
-                    execlp("Maze1", "Maze1", NULL);
+                    maze1();
                     break;
                 case 1:
-                    execlp("Maze2", "Maze2", NULL);
+                    maze2();
                     break;
                 case 2:
-                    execlp("Maze3", "Maze3", NULL);
+                    maze3();
                     break;
                 case 3:
-                    execlp("Maze4", "Maze4", NULL);
+                    maze4();
                     break;
                 }
                 exit(1);
@@ -68,16 +68,16 @@ void trap(int you)
                 switch (getpid() % 4) //pid번호로 함정방 랜덤하게 배치
                 {
                 case 0:
-                    execlp("Maze1", "Maze1", NULL);
+                    maze1();
                     break;
                 case 1:
-                    execlp("Maze2", "Maze2", NULL);
+                    maze2();
                     break;
                 case 2:
-                    execlp("Maze3", "Maze3", NULL);
+                    maze3();
                     break;
                 case 3:
-                    execlp("Maze4", "Maze4", NULL);
+                    maze4();
                     break;
                 }
                 exit(2);
@@ -110,16 +110,16 @@ void trap(int you)
                 switch (getpid() % 4) //pid번호로 함정방 랜덤하게 배치
                 {
                 case 0:
-                    execlp("Maze1", "Maze1", NULL);
+                    maze1();
                     break;
                 case 1:
-                    execlp("Maze2", "Maze2", NULL);
+                    maze2();
                     break;
                 case 2:
-                    execlp("Maze3", "Maze3", NULL);
+                    maze3();
                     break;
                 case 3:
-                    execlp("Maze4", "Maze4", NULL);
+                    maze4();
                     break;
                 }
                 exit(1);
@@ -134,16 +134,16 @@ void trap(int you)
                 switch (getpid() % 4) //pid번호로 함정방 랜덤하게 배치
                 {
                 case 0:
-                    execlp("Maze1", "Maze1", NULL);
+                    maze1();
                     break;
                 case 1:
-                    execlp("Maze2", "Maze2", NULL);
+                    maze2();
                     break;
                 case 2:
-                    execlp("Maze3", "Maze3", NULL);
+                    maze3();
                     break;
                 case 3:
-                    execlp("Maze4", "Maze4", NULL);
+                    maze4();
                     break;
                 }
                 exit(2);
@@ -158,16 +158,16 @@ void trap(int you)
                 switch (getpid() % 4) //pid번호로 함정방 랜덤하게 배치
                 {
                 case 0:
-                    execlp("Maze1", "Maze1", NULL);
+                    maze1();
                     break;
                 case 1:
-                    execlp("Maze2", "Maze2", NULL);
+                    maze2();
                     break;
                 case 2:
-                    execlp("Maze3", "Maze3", NULL);
+                    maze3();
                     break;
                 case 3:
-                    execlp("Maze4", "Maze4", NULL);
+                    maze4();
                     break;
                 }
                 exit(3);
@@ -199,16 +199,16 @@ void trap(int you)
                 switch (getpid() % 4) //pid번호로 함정방 랜덤하게 배치
                 {
                 case 0:
-                    execlp("Maze1", "Maze1", NULL);
+                    maze1();
                     break;
                 case 1:
-                    execlp("Maze2", "Maze2", NULL);
+                    maze2();
                     break;
                 case 2:
-                    execlp("Maze3", "Maze3", NULL);
+                    maze3();
                     break;
                 case 3:
-                    execlp("Maze4", "Maze4", NULL);
+                    maze4();
                     break;
                 }
                 exit(1);
@@ -223,16 +223,16 @@ void trap(int you)
                 switch (getpid() % 4) //pid번호로 함정방 랜덤하게 배치
                 {
                 case 0:
-                    execlp("Maze1", "Maze1", NULL);
+                    maze1();
                     break;
                 case 1:
-                    execlp("Maze2", "Maze2", NULL);
+                    maze2();
                     break;
                 case 2:
-                    execlp("Maze3", "Maze3", NULL);
+                    maze3();
                     break;
                 case 3:
-                    execlp("Maze4", "Maze4", NULL);
+                    maze4();
                     break;
                 }
                 exit(2);
@@ -247,16 +247,16 @@ void trap(int you)
                 switch (getpid() % 4) //pid번호로 함정방 랜덤하게 배치
                 {
                 case 0:
-                    execlp("Maze1", "Maze1", NULL);
+                    maze1();
                     break;
                 case 1:
-                    execlp("Maze2", "Maze2", NULL);
+                    maze2();
                     break;
                 case 2:
-                    execlp("Maze3", "Maze3", NULL);
+                    maze3();
                     break;
                 case 3:
-                    execlp("Maze4", "Maze4", NULL);
+                    maze4();
                     break;
                 }
                 exit(3);
@@ -271,16 +271,16 @@ void trap(int you)
                 switch (getpid() % 4) //pid번호로 함정방 랜덤하게 배치
                 {
                 case 0:
-                    execlp("Maze1", "Maze1", NULL);
+                    maze1();
                     break;
                 case 1:
-                    execlp("Maze2", "Maze2", NULL);
+                    maze2();
                     break;
                 case 2:
-                    execlp("Maze3", "Maze3", NULL);
+                    maze3();
                     break;
                 case 3:
-                    execlp("Maze4", "Maze4", NULL);
+                    maze4();
                     break;
                 }
                 exit(4);
