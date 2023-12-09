@@ -52,6 +52,8 @@ void start_combat(Player* player, int you) {
                 }
                 else {
                     system("clear");
+                    printf("%s\n", MONSTER_ART); // 몬스터 아스키 아트 출력
+                    fflush(stdout);
                     printf("당신의 체력: %d, 몬스터 체력: %d\n", player->HP, shmem->monster.Monster_HP);
                     fflush(stdout);
                     printf("입력대기상태입니다.\n");
@@ -89,6 +91,8 @@ void start_combat(Player* player, int you) {
                 }
                 else {
                     system("clear");
+                    printf("%s\n", MONSTER_ART); // 몬스터 아스키 아트 출력
+                    fflush(stdout);
                     printf("당신의 체력: %d, 몬스터 체력: %d\n", player->HP, shmem->monster.Monster_HP);
                     fflush(stdout);
                     printf("입력대기상태입니다.\n");
@@ -132,6 +136,8 @@ void start_combat(Player* player, int you) {
                 }
                 else {
                     system("clear");
+                    printf("%s\n", MONSTER_ART); // 몬스터 아스키 아트 출력
+                    fflush(stdout);
                     printf("당신의 체력: %d, 몬스터 체력: %d\n", player->HP, shmem->monster.Monster_HP);
                     fflush(stdout);
                     printf("입력대기상태입니다.\n");
@@ -148,6 +154,7 @@ void start_combat(Player* player, int you) {
             break;
         }
 
+        sleep(1);
 
         switch (choice) {
         case 'A': // 일반 공격
@@ -246,6 +253,8 @@ void boss_combat(Player* player, int you) {
                 }
                 else {
                     system("clear");
+                    printf("  /\\_/\\\n ( T.T )\n  [ ^ ]\n");
+                    fflush(stdout);
                     printf("당신의 HP: %d, 보스몬스터 HP: %d\n", player->HP, shmem->boss_monster.Monster_HP);
                     fflush(stdout);
                     printf("입력대기상태입니다.\n");
@@ -283,6 +292,8 @@ void boss_combat(Player* player, int you) {
                 }
                 else {
                     system("clear");
+                    printf("  /\\_/\\\n ( T.T )\n  [ ^ ]\n");
+                    fflush(stdout);
                     printf("당신의 HP: %d, 보스몬스터 HP: %d\n", player->HP, shmem->boss_monster.Monster_HP);
                     fflush(stdout);
                     printf("입력대기상태입니다.\n");
@@ -326,6 +337,8 @@ void boss_combat(Player* player, int you) {
                 }
                 else {
                     system("clear");
+                    printf("  /\\_/\\\n ( T.T )\n  [ ^ ]\n");
+                    fflush(stdout);
                     printf("당신의 HP: %d, 보스몬스터 HP: %d\n", player->HP, shmem->boss_monster.Monster_HP);
                     fflush(stdout);
                     printf("입력대기상태입니다.\n");
@@ -342,7 +355,7 @@ void boss_combat(Player* player, int you) {
             break;
         }
 
-
+        sleep(1);
 
         switch (choice) {
         case 'A': // 일반 공격
@@ -561,6 +574,8 @@ void boss_combat3(Player* player, int you) {
                 }
                 else {
                     system("clear");
+                    printf("  /\\_/\\\n ( poq )\n *< ^ >*\n");
+                    fflush(stdout);
                     printf("당신의 HP: %d, 보스몬스터 HP: %d\n", player->HP, shmem->boss_monster3.Monster_HP);
                     fflush(stdout);
                     printf("입력대기상태입니다.\n");
@@ -598,6 +613,8 @@ void boss_combat3(Player* player, int you) {
                 }
                 else {
                     system("clear");
+                    printf("  /\\_/\\\n ( poq )\n *< ^ >*\n");
+                    fflush(stdout);
                     printf("당신의 HP: %d, 보스몬스터 HP: %d\n", player->HP, shmem->boss_monster3.Monster_HP);
                     fflush(stdout);
                     printf("입력대기상태입니다.\n");
@@ -641,6 +658,8 @@ void boss_combat3(Player* player, int you) {
                 }
                 else {
                     system("clear");
+                    printf("  /\\_/\\\n ( poq )\n *< ^ >*\n");
+                    fflush(stdout);
                     printf("당신의 HP: %d, 보스몬스터 HP: %d\n", player->HP, shmem->boss_monster3.Monster_HP);
                     fflush(stdout);
                     printf("입력대기상태입니다.\n");
@@ -656,6 +675,8 @@ void boss_combat3(Player* player, int you) {
             }
             break;
         }
+        
+        sleep(1);
 
         switch (choice) {
         case 'A': // 일반 공격

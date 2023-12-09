@@ -103,7 +103,7 @@ int main()
 	system("clear");
 
 	while (true) {
-		printf("파티장의 시작을 기다리고 있습니다.");
+		printf("파티장의 시작을 기다리고 있습니다.\n");
 		system("clear");
 		if (shmem->game_ready) {
 			printf("파티장이 시작하였습니다.");
@@ -124,7 +124,7 @@ int main()
 			}
 			field_map(player, you);
 			sleep(1);
-			if (shmem->Host_HP >= 0) {
+			if (shmem->Host_HP <= 0) {
 				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
 				fflush(stdout);
 				break;
@@ -145,9 +145,9 @@ int main()
 					break;
 				}
 			}
-			trap();
+			trap(you);
 			sleep(1);
-			if (shmem->Host_HP >= 0) {
+			if (shmem->Host_HP <= 0) {
 				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
 				fflush(stdout);
 				break;
@@ -199,7 +199,7 @@ int main()
 			sleep(1);
 			//보스방
 			boss_room(player, you);
-			if (shmem->Host_HP >= 0) {
+			if (shmem->Host_HP <= 0) {
 				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
 				fflush(stdout);
 				break;

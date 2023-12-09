@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include "game.h"
+#include <stdlib.h>
 
 //line µû·Î ¸¸µë
 void draw_line() {
