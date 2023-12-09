@@ -46,10 +46,9 @@ void draw_move(char input, char map[MAP_HEIGHT][MAP_WIDTH]) {
         return;
     }
 
-
-    map[shmem->party.x][shmem->party.x] = ' '; // 이전 플레이어 위치 지우기
+    map[shmem->party.y][shmem->party.x] = ' '; // 이전 플레이어 위치 지우기
     sleep(2);
-    map[shmem->party.x][shmem->party.y] = PLAYER_ICON; // 새 위치에 플레이어 표시
+    map[shmem->party.y][shmem->party.x] = PLAYER_ICON; // 새 위치에 플레이어 표시
 }
 
 void initialize_map(char map[MAP_HEIGHT][MAP_WIDTH]) {
@@ -61,16 +60,54 @@ void initialize_map(char map[MAP_HEIGHT][MAP_WIDTH]) {
     }
     shmem->party.x = 0;
     shmem->party.y = MAP_HEIGHT / 2;
-    map[shmem->party.x][shmem->party.y] = PLAYER_ICON;
+    map[shmem->party.y][shmem->party.x] = PLAYER_ICON;
 }
 
+void alarmHandler(int signo) {
+    printf("시간안에 탈출을 못하였습니다. 강제 전이\n");
+    exit(0);
+}
 
+void printMaze(int* playerRow, int* playerCol, char maze[ROWS][COLS]) {
+    system("clear");
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            if (i >= playerRow - 1 && i <= playerRow + 1 && j >= playerCol - 1 && j <= playerCol + 1)
+            {
+                printf("%c ", maze[i][j]);
+            }
+            else
+            {
+                printf("  ");
+            }
+        }
+        printf("\n");
+    }
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            printf("%c ", maze[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+// 플레이어 이동 함수
+void movePlayer(int newRow, int newCol, int* playerRow, int* playerCol, char maze[ROWS][COLS]) {
+    // 이동하려는 위치가 벽이 아니라면 이동
+    if (maze[newRow][newCol] != '#') {
+        maze[*playerRow][*playerCol] = ' '; // 이전 위치를 비움
+        *playerRow = newRow;
+        *playerCol = newCol;
+        maze[*playerRow][*playerCol] = 'P'; // 새로운 위치에 플레이어 표시
+    }
+}
 
 
 
 void ClearLineFromReadBuffer(void)
 {
-    while (getchar() != '\n');
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
 }
 
 void field_map(Player* player, int you) {
@@ -154,7 +191,7 @@ void boss_room(Player* player, int you) {
     bool inCombat = false; // 전투 상태 플래그
 
     initialize_map(map);
-    map[shmem->boss_x][shmem->boss_y] = MONSTER_ICON; // 몬스터 위치 표시
+    map[shmem->boss_y][shmem->boss_x] = MONSTER_ICON; // 몬스터 위치 표시
 
     while (1) {
         system("clear"); // 화면 클리어
@@ -184,7 +221,7 @@ void boss_room(Player* player, int you) {
                     break;
                 }
                 if (player->HP > 0) {
-                    shmem->boss_monster3.Monster_HP -= (100 * shmem->User_num - shmem->sum_boss_phase2_HP);
+                    sleep(1);
                     printf("Boss Phase3...\n");
                     boss_combat3(player, you);
                     if (shmem->Host_HP <= 0) {
@@ -209,10 +246,10 @@ void boss_room(Player* player, int you) {
             case 'a': // 왼쪽으로 이동
             case 's': // 아래로 이동
             case 'd': // 오른쪽으로 이동
-                draw_move(shmem->input, player, map);
+                draw_move(shmem->input, map);
                 break;
-            case 'q': // 게임 종료
-                return 0;
+            //case 'q': // 게임 종료
+               // return 0;
             default:
                 printf("조작불가!\n");
             }
