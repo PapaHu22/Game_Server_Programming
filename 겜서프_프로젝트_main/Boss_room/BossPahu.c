@@ -11,6 +11,10 @@
 #include <sys/types.h>
 
 
+// phase2에서 각 보스분신 체력을 깎은만큼 전체 분신체력을 깎는다. 그리고 phase3 보스에 체력도 또 깎는다. 알람 기능을 넣어서 phase2에서 제한 시간안에 보>스 분신을 못 해치우면 체력을 깎은 만큼만 phase3보스체력에 영향을 준다.
+
+
+
 
 int main() {
 
@@ -43,7 +47,7 @@ int main() {
     shmem->checkin_2 = false;
     shmem->checkin_3 = false;
     shmem->checkin_4 = false;
-    int you = shmem->User_num;
+    int you = 1;
 
     int i;
     char map[MAP_HEIGHT][MAP_WIDTH];
@@ -61,7 +65,6 @@ int main() {
 
         system("clear"); // 화면 클리어
         printf("현재 위치: 보스방\n");
-        //printf("%d \n",shmem->boss_monster.x);
         draw_line();
         draw_map(map);
         draw_line();
@@ -75,6 +78,7 @@ int main() {
             printf("Boss Phase1...\n");
             start_combat(&player, you); // 전투 시작
 
+
             if (shmem->Monster_HP <= 0 && player.health > 0) {
 
 
@@ -82,13 +86,16 @@ int main() {
 
                 start_combat2(&player, you);
 
+
                 if (player.health > 0) {
 
                     shmem->Monster3_HP -= (100 * shmem->User_num - shmem->sum_boss_phase2_HP);
                     printf("Boss Phase3...\n");
                     start_combat3(&player, you);
                     if (shmem->Monster3_HP <= 0 && player.health > 0) {
+
                         inCombat = false; // 전투 상태 종료
+
                     }
                 }
             }
@@ -127,3 +134,4 @@ int main() {
 
     return 0;
 }
+
