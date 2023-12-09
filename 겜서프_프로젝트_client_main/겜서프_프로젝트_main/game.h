@@ -51,6 +51,7 @@ typedef struct ShMEM {
     bool game_ready; //
     bool field_ready;
     bool boss_ready;
+    char input;
     struct Monster monster; // 몬스터 정보
     int Host_HP; // 호스트 체력(호스트 체력이 0이 되면 게임오버)
     int Cr_room; // 현재 방 위치
@@ -66,6 +67,12 @@ typedef struct ShMEM {
     bool maze_checkin_2;
     bool maze_checkin_3;
     bool maze_checkin_4;
+    bool shoping_wait;
+    int Potion;
+    int OP_UP;
+    int MAX_HP_UP;
+    int boss_x;
+    int boss_y;
     struct BossMonster boss_monster; // 몬스터 정보
     struct BossMonster boss_monster2; //phase2 boss_monster
     struct BossMonster boss_monster3; //phase3 boss_monster
@@ -73,6 +80,8 @@ typedef struct ShMEM {
 
 // 함수 프로토타입 선언
 void draw_line();
+void field_map(Player* player, int you);
+void boss_map(Player* player, int you);
 void draw_map(char map[MAP_HEIGHT][MAP_WIDTH]);
 void draw_move(char input, char map[MAP_HEIGHT][MAP_WIDTH]);
 void draw_attack(Player* player, Monster* monster);

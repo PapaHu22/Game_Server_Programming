@@ -34,6 +34,7 @@ int main()
 	shmem->game_ready = false;
 	shmem->field_ready = false;
 	shmem->boss_ready = false;
+	shmem->shoping_wait = false;
 
 	Class Warrior; //전사, 탱
 	Class SwordsMan; //검사, 근딜
@@ -102,7 +103,7 @@ int main()
 
 	shmem->Host_HP = player->HP;
 
-	cls("clear");
+	system("clear");
 	int game_ready;
 	int field_ready;
 	int boss_ready;
@@ -110,12 +111,14 @@ int main()
 	scanf("%d", &game_ready);
 	if (game_ready == 1) {
 		printf("탐험을 시작합니다.");
+		fflush(stdout);
 		shmem->game_ready = true;
 	}
 
 	do {
 		if (shmem->Cr_room == 1 || shmem->Cr_room == 2) {
-			printf("앞에 문이 있습니다. 진입하시겠습니까?(1번 입장시 진입)");
+			printf("앞에 문이 있습니다. 진입하시겠습니까?(1번 입력시 진입)");
+			fflush(stdout);
 			while (1) {
 				scanf("%d", &field_ready);
 				if (field_ready == 1) {
@@ -130,13 +133,17 @@ int main()
 			shmem->field_ready = false;
 			if (shmem->Host_HP <= 0) {
 				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
+				fflush(stdout);
 				break;
 			}
+
 			printf("필드맵을 클리어했습니다.");
+			fflush(stdout);
 			shmem->Cr_room++;
 		}
 		else if (shmem->Cr_room== 3) {
-			printf("앞에 문이 있습니다. 진입하시겠습니까?(1번 입장시 진입)");
+			printf("앞에 문이 있습니다. 진입하시겠습니까?(1번 입력시 진입)");
+			fflush(stdout);
 			while (1) {
 				scanf("%d", &field_ready);
 				if (field_ready == 1) {
@@ -151,18 +158,36 @@ int main()
 			shmem->field_ready = false;
 			if (shmem->Host_HP <= 0) {
 				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
+				fflush(stdout);
 				break;
 			}
 			printf("함정맵을 클리어했습니다.");
+			fflush(stdout);
 			shmem->Cr_room++;
 		}
 		else if(shmem->Cr_room == 4) {
 			// 상점맵
-			printf("상점맵 이용");
+			shop();
+			player->OP += (10 * shmem->OP_UP);
+			for (int i = 0; i < shmem->MAX_HP_UP; i++) {
+				player->class.class_HP = player->class.class_HP * 2;
+			}
+			for (int i = 0; i < shmem->Potion; i++) {
+				player->HP += 20;
+				if (player->HP > player->class.class_HP) {
+					player->HP = player->class.class_HP;
+				}
+			}
+			shmem->Host_HP = player->HP;
+			shmem->shoping_wait = true;
+			printf("던전 상점 이용 끝");
+			fflush(stdout);
+			sleep(2);
 			shmem->Cr_room++;
 		}
 		else {
-			printf("보스방 앞에 있습니다.진입하시겠습니까 ? (1번 입장시 진입)");
+			printf("보스방 앞에 있습니다.진입하시겠습니까 ? (1번 입력시 진입)");
+			fflush(stdout);
 			while (1) {
 				scanf("%d", &boss_ready);
 				if (boss_ready == 1) {
@@ -174,17 +199,21 @@ int main()
 				}
 			}
 			//보스방
+			boss_room(player, you);
 			if (shmem->Host_HP <= 0) {
 				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐사 실패");
+				fflush(stdout);
 				break;
 			}
-			cls("clear");
+			system("clear");
 			printf("보스를 클리어했습니다.");
+			fflush(stdout);
 			shmem->Cr_room++;
 		}
 	} while (shmem->Cr_room <= 5);
 
 	free(player);
+	shmctl(shmid, IPC_RMID, NULL)
 	return 0;
 }
 

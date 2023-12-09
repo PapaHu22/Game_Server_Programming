@@ -33,7 +33,7 @@ void alarmHandler(int signo) {
 
 // 미로를 출력하는 함수
 void printMaze() {
-    system("cls");
+    system("clear");
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
             if (i >= playerRow - 1 && i <= playerRow + 1 && j >= playerCol - 1 && j <= playerCol + 1)

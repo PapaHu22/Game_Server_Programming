@@ -92,7 +92,7 @@ void trap(int you)
                 break;
             }
             else {
-                cls("clear");
+                system("clear");
                 printf("모든 파티원이 함정방에서 탈출하는걸 대기합니다.\n");
             }
         }
@@ -181,7 +181,7 @@ void trap(int you)
                 break;
             }
             else {
-                cls("clear");
+                system("clear");
                 printf("모든 파티원이 함정방에서 탈출하는걸 대기합니다.\n");
             }
         }
@@ -294,7 +294,7 @@ void trap(int you)
                 break;
             }
             else {
-                cls("clear");
+                system("clear");
                 printf("모든 파티원이 함정방에서 탈출하는걸 대기합니다.\n");
             }
         }
