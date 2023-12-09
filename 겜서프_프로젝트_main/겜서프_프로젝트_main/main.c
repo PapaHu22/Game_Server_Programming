@@ -166,6 +166,7 @@ int main()
 			shmem->Cr_room++;
 		}
 		else if(shmem->Cr_room == 4) {
+			system("clear");
 			// »óÁ¡¸Ê
 			shop();
 			player->OP += (10 * shmem->OP_UP);
@@ -213,7 +214,7 @@ int main()
 	} while (shmem->Cr_room <= 5);
 
 	free(player);
-	shmctl(shmid, IPC_RMID, NULL)
+	shmctl(shmid, IPC_RMID, NULL);
 	return 0;
 }
 

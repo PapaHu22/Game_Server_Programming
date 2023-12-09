@@ -193,9 +193,9 @@ void start_combat(Player* player, int you) {
         }
 
         if (shmem->monster.Monster_HP <= 0) {
-            printf("-몬스터를 물리쳤습니다\n");
-            fflush(stdout);
             shmem->party.Party_Coin += 100;
+            printf("-몬스터를 물리쳤습니다. 100코인을 얻었다! 현재 파티 코인 : %d\n", shmem->party.Party_Coin);
+            fflush(stdout);
             break;
         }
     }

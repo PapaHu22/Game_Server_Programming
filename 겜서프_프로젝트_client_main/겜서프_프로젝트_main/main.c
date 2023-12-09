@@ -162,6 +162,7 @@ int main()
 			fflush(stdout);
 		}
 		else if(shmem->Cr_room == 4) {
+			system("clear");
 			while (1) {
 				if (shmem->shoping_wait) {
 					break;

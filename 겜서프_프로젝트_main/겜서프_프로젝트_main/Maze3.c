@@ -68,8 +68,9 @@ int maze3() {
 
         if (playerRow == 6 && playerCol == 0) {
             printMaze(&playerRow, &playerCol, maze);
-            printf("목적지에 도착했습니다!\n");
             shmem->party.Party_Coin += 100;
+            printf("목적지에 도착했습니다! 미로에서 보물을 찾았다! 현재 파티 코인 : \n", shmem->party.Party_Coin);
+
             break;
         }
 

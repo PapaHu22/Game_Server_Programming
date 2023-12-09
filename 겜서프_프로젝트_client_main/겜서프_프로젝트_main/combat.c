@@ -424,7 +424,7 @@ void boss_combat2(Player* player, int you) {
     printf("제한 시간 10초 동안 보스 몬스터의 분신을 공격할 수 있습니다. 가능한 분신을 쓰러뜨리는게 좋습니다.\n");
     fflush(stdout);
 
-    while (monster2.Monster_HP <= 0 && player->HP > 0 && t) {
+    while (monster2.Monster_HP >= 0 && player->HP > 0 && t) {
         printf("  /\\_/\\\n ( ^.^ )\n  < ^ >\n");
         fflush(stdout);
         //printf("제한 시간 10초 동안 보스 몬스터의 분신을 공격할 수 있습니다. 가능한 분신을 쓰러뜨리는게 좋을 겁니다.");

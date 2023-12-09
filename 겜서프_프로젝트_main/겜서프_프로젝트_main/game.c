@@ -293,7 +293,7 @@ void shop() {
 	shmem->MAX_HP_UP = 0;
 
 	while (shmem->party.Party_Coin > 0) {
-		printf("현재 코인 : %d", shmem->party.Party_Coin);
+		printf("현재 코인 : %d\n", shmem->party.Party_Coin);
 		printf("포션 구입(파티원 전체 체력 20 회복) <A> [20코인]\n");
 		printf("공격력 강화 주문서 구입(파티원 전체 공격력 10 상승) <B> [100코인]\n");
 		printf("파티원 전체 최대 체력 상승 구입(파티원 전체 최대 체력 2 배 상승) <C> [200코인]\n");
@@ -314,6 +314,8 @@ void shop() {
 			printf("최대 체력 상스 구매\n");
 			shmem->MAX_HP_UP++;
 			shmem->party.Party_Coin -= 200;
+			break;
+		default :
 			break;
 		}
 	}
