@@ -82,6 +82,10 @@ typedef struct ShMEM {
 }ShMEM;
 
 // 함수 프로토타입 선언
+void maze1();
+void maze2();
+void maze3();
+void maze4();
 void alarmHandler(int signo);
 void printMaze(int* playerRow, int* playerCol, char maze[ROWS][COLS]);
 void movePlayer(int newRow, int newCol, int* playerRow, int* playerCol, char maze[ROWS][COLS]);

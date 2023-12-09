@@ -32,20 +32,20 @@ void start_combat(Player* player, int you) {
      
         switch (shmem->User_num) {
         case 1:
-            scanf_s(" %c", &choice, 1);
+            scanf(" %c", &choice, 1);
             break;
         case 2:
             while (true) {
                 if (you == 1 && !shmem->checkin_1) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_1 = true;
                 }
                 else if (you == 2 && shmem->checkin_1 && !shmem->checkin_2) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_2 = true;
                 }
                 else {
@@ -69,20 +69,20 @@ void start_combat(Player* player, int you) {
                 if (you == 1 && !shmem->checkin_1) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_1 = true;
                 }
                 else if (you == 2 && shmem->checkin_1 && !shmem->checkin_2) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_2 = true;
                 }
                 else if (you == 3 && shmem->checkin_2 && !shmem->checkin_3)
                 {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_3 = true;
                 }
                 else {
@@ -106,26 +106,26 @@ void start_combat(Player* player, int you) {
                 if (you == 1 && !shmem->checkin_1) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_1 = true;
                 }
                 else if (you == 2 && shmem->checkin_1 && !shmem->checkin_2) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_2 = true;
                 }
                 else if (you == 3 && shmem->checkin_2 && !shmem->checkin_3)
                 {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_3 = true;
                 }
                 else if (you == 4 && shmem->checkin_3 && !shmem->checkin_4) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_4 = true;
                 }
                 else {
@@ -219,20 +219,20 @@ void boss_combat(Player* player, int you) {
 
         switch (shmem->User_num) {
         case 1:
-            scanf_s(" %c", &choice, 1);
+            scanf(" %c", &choice, 1);
             break;
         case 2:
             while (true) {
                 if (you == 1 && !shmem->checkin_1) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_1 = true;
                 }
                 else if (you == 2 && shmem->checkin_1 && !shmem->checkin_2) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_2 = true;
                 }
                 else {
@@ -256,20 +256,20 @@ void boss_combat(Player* player, int you) {
                 if (you == 1 && !shmem->checkin_1) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_1 = true;
                 }
                 else if (you == 2 && shmem->checkin_1 && !shmem->checkin_2) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_2 = true;
                 }
                 else if (you == 3 && shmem->checkin_2 && !shmem->checkin_3)
                 {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_3 = true;
                 }
                 else {
@@ -293,26 +293,26 @@ void boss_combat(Player* player, int you) {
                 if (you == 1 && !shmem->checkin_1) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_1 = true;
                 }
                 else if (you == 2 && shmem->checkin_1 && !shmem->checkin_2) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_2 = true;
                 }
                 else if (you == 3 && shmem->checkin_2 && !shmem->checkin_3)
                 {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_3 = true;
                 }
                 else if (you == 4 && shmem->checkin_3 && !shmem->checkin_4) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_4 = true;
                 }
                 else {
@@ -521,20 +521,20 @@ void boss_combat3(Player* player, int you) {
 
         switch (shmem->User_num) {
         case 1:
-            scanf_s(" %c", &choice, 1);
+            scanf(" %c", &choice, 1);
             break;
         case 2:
             while (true) {
                 if (you == 1 && !shmem->checkin_1) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_1 = true;
                 }
                 else if (you == 2 && shmem->checkin_1 && !shmem->checkin_2) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_2 = true;
                 }
                 else {
@@ -558,20 +558,20 @@ void boss_combat3(Player* player, int you) {
                 if (you == 1 && !shmem->checkin_1) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_1 = true;
                 }
                 else if (you == 2 && shmem->checkin_1 && !shmem->checkin_2) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_2 = true;
                 }
                 else if (you == 3 && shmem->checkin_2 && !shmem->checkin_3)
                 {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_3 = true;
                 }
                 else {
@@ -595,26 +595,26 @@ void boss_combat3(Player* player, int you) {
                 if (you == 1 && !shmem->checkin_1) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_1 = true;
                 }
                 else if (you == 2 && shmem->checkin_1 && !shmem->checkin_2) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_2 = true;
                 }
                 else if (you == 3 && shmem->checkin_2 && !shmem->checkin_3)
                 {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_3 = true;
                 }
                 else if (you == 4 && shmem->checkin_3 && !shmem->checkin_4) {
                     printf("공격(A), 특수 공격(S),  방어(D): ");
                     fflush(stdout);
-                    scanf_s(" %c", &choice, 1);
+                    scanf(" %c", &choice, 1);
                     shmem->checkin_4 = true;
                 }
                 else {

@@ -11,7 +11,7 @@
 
 
 
-int main() {
+int maze4() {
     ShMEM* shmem = shm_get();
     char move;
     int playerRow = 8;

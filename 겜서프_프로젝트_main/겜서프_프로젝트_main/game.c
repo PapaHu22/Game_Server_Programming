@@ -143,7 +143,7 @@ void field_map(Player* player, int you) {
 
 		if (!inCombat) {
 			printf("이동 WASD, Q 종료: ");
-			scanfs(" %c", &input, 1);
+			scanf(" %c", &input, 1);
             shmem->input = input;
 		}
 
@@ -209,7 +209,7 @@ void boss_room(Player* player, int you) {
 
 		if (!inCombat) {
 			printf("이동 WASD, Q 종료: ");
-			scanfs(" %c", &input, 1);
+			scanf(" %c", &input, 1);
 			shmem->input = input;
 		}
 
@@ -290,7 +290,7 @@ void shop() {
 		printf("포션 구입(파티원 전체 체력 20 회복) <A> [20코인]\n");
 		printf("공격력 강화 주문서 구입(파티원 전체 공격력 10 상승) <B> [100코인]\n");
 		printf("파티원 전체 최대 체력 상승 구입(파티원 전체 최대 체력 2 배 상승) <C> [200코인]\n");
-		scanfs(" %c", &input, 1);
+		scanf(" %c", &input, 1);
 
 		switch (input) {
 		case 'A':

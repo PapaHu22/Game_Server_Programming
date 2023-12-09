@@ -15,7 +15,7 @@
 // 미로를 출력하는 함수
 
 
-int main() {
+int maze2() {
     ShMEM* shmem = shm_get();
     char move;
 

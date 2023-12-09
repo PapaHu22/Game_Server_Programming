@@ -11,7 +11,7 @@
 // 미로 배열
 
 
-int main() {
+int maze3() {
     ShMEM* shmem = shm_get();
     char move;
 
