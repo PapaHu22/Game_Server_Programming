@@ -241,7 +241,7 @@ void boss_room(Player* player, int you) {
 							break;
 						}
 						else {
-							system("cls");
+							system("clear");
 							printf("파티원들을 기다립니다.\n");
 							sleep(1);
 						}
@@ -253,7 +253,7 @@ void boss_room(Player* player, int you) {
 							break;
 						}
 						else {
-							system("cls");
+							system("clear");
 							printf("파티원들을 기다립니다.\n");
 							sleep(1);
 						}
@@ -265,7 +265,7 @@ void boss_room(Player* player, int you) {
 							break;
 						}
 						else {
-							system("cls");
+							system("clear");
 							printf("파티원들을 기다립니다.\n");
 							sleep(1);
 						}

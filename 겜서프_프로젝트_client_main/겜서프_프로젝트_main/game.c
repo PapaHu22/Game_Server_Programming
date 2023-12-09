@@ -219,13 +219,13 @@ void boss_room(Player* player, int you) {
                 printf("Boss Phase2...\n");
                 boss_combat2(player, you);
                 if (you == 2) {
-                    shmem->maze_checkin_2;
+                    shmem->maze_checkin_2 = true;
                 }
                 else if (you == 3) {
-                    shmem->maze_checkin_3;
+                    shmem->maze_checkin_3 = true;
                 }
                 else if (you == 4) {
-                    shmem->maze_checkin_4;
+                    shmem->maze_checkin_4 = true;
                 }
                 switch (shmem->User_num) {
                 case 1:
@@ -236,7 +236,7 @@ void boss_room(Player* player, int you) {
                             break;
                         }
                         else {
-                            system("cls");
+                            system("clear");
                             printf("파티원들을 기다립니다.\n");
                             sleep(1);
                         }
@@ -248,7 +248,7 @@ void boss_room(Player* player, int you) {
                             break;
                         }
                         else {
-                            system("cls");
+                            system("clear");
                             printf("파티원들을 기다립니다.\n");
                             sleep(1);
                         }
@@ -260,7 +260,7 @@ void boss_room(Player* player, int you) {
                             break;
                         }
                         else {
-                            system("cls");
+                            system("clear");
                             printf("파티원들을 기다립니다.\n");
                             sleep(1);
                         }
