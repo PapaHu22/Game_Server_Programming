@@ -67,6 +67,10 @@ void initialize_map(char map[MAP_HEIGHT][MAP_WIDTH]) {
 
 
 
+void alarmHandler(int signo) {
+	printf("시간안에 탈출을 못하였습니다. 강제 전이\n");
+	exit(0);
+}
 
 
 void ClearLineFromReadBuffer()

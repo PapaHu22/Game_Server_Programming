@@ -77,6 +77,7 @@ typedef struct ShMEM {
 }ShMEM;
 
 // 함수 프로토타입 선언
+void alarmHandler(int signo);
 void draw_line();
 void trap(int you);
 void shop();
