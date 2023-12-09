@@ -136,7 +136,7 @@ int main()
 					break;
 				}
 			}
-			trap(shmem->User_num);
+			trap();
 			sleep(1);
 			if (shmem->Host_HP >= 0) {
 				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");
@@ -149,6 +149,12 @@ int main()
 			printf("상점맵 이용");
 		}
 		else {
+			printf("보스방 앞에 있습니다. 파티장의 시작을 대기합니다.\n", shmem->Cr_room);
+			while (1) {
+				if (shmem->boss_ready) {
+					break;
+				}
+			}
 			//보스방
 			if (shmem->Host_HP >= 0) {
 				printf("파티장(호스트)이 리타이어됐습니다. 던전 탐험 실패");

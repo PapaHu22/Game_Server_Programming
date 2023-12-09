@@ -118,7 +118,13 @@ void start_combat(Player* player, int you) {
             player->HP -= shmem->monster.Monster_OP;
         }
 
-        //  체력 상태 확인(호스트 버젼)
+        // 호스트 다운
+        if (shmem->Host_HP <= 0) {
+            break;
+        }
+
+
+        //  체력 상태 확인
         if (player->HP <= 0) {
             printf("당신은 패배했습니다\n");
             break;
@@ -126,6 +132,7 @@ void start_combat(Player* player, int you) {
 
         if (shmem->monster.Monster_HP <= 0) {
             printf("-몬스터를 물리쳤습니다\n");
+            shmem->party.Party_Coin += 100;
             break;
         }
     }

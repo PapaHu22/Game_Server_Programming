@@ -24,6 +24,7 @@
     <ProjectGuid>{8f198c44-724b-4e05-8697-bf373c0d5a75}</ProjectGuid>
     <RootNamespace>겜서프프로젝트main</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>겜서프_프로젝트_client_main</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

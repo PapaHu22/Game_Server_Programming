@@ -87,7 +87,7 @@ void field_map(Player* player, int you) {
 	map[shmem->monster.y][shmem->monster.x] = MONSTER_ICON; // 몬스터 위치 표시
 
 	while (1) {
-		cls("clear") // 화면 클리어
+        cls("clear"); // 화면 클리어
 		printf("현재 위치: 맵 이름\n"); // 맵 이름 출력
 		draw_line();
 		draw_map(map); // 맵 출력
