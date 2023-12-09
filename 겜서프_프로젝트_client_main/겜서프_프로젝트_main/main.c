@@ -20,7 +20,7 @@ int main()
 	key_t key;
 	ShMEM* shmem; //공유메모리 요소(유저수, 현재 방 위치, 파티, 보스2페이즈 체력)
 	
-	key = ftok("/home/g_202211077/Teamproject/Boss", 211);
+	key = ftok("/home/g_202211077/Teamproject", 211);
 	shmid = shmget(key, 1024, 0);
 	if (shmid == -1) {
 		perror("shmget");

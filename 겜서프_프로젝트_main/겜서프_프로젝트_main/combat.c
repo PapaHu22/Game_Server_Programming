@@ -443,7 +443,7 @@ void boss_combat2(Player* player, int you) {
     printf("제한 시간 10초 동안 보스 몬스터의 분신을 공격할 수 있습니다. 가능한 분신을 쓰러뜨리는게 좋습니다.\n");
     fflush(stdout);
 
-    while (monster2.Monster_HP <= 0 && player->HP > 0 && t) {
+    while (monster2.Monster_HP >= 0 && player->HP > 0 && t) {
         printf("  /\\_/\\\n ( ^.^ )\n  < ^ >\n");
         fflush(stdout);
         //printf("제한 시간 10초 동안 보스 몬스터의 분신을 공격할 수 있습니다. 가능한 분신을 쓰러뜨리는게 좋을 겁니다.");
@@ -453,7 +453,7 @@ void boss_combat2(Player* player, int you) {
         printf("당신의 HP: %d, 보스몬스터 분신의 HP: %d\n", player->HP, monster2.Monster_HP);
         printf("Attack (A), Special Attack (S),  Defend (D): ");
 
-        shmem->sum_boss_phase2_HP = (400 - (100 - monster2.Monster_HP));
+        shmem->sum_boss_phase2_HP = (100 * shmem->User_num - (100 -  monster2.Monster_HP));
         char choice;
         scanf(" %c", &choice, 1);
 
@@ -686,13 +686,13 @@ void boss_combat3(Player* player, int you) {
             if (random == 1) {
                 printf("보스몬스터가 당신을 공격합니다!\n");
                 fflush(stdout);
-                player->HP -= shmem->boss_monster3.Monster_HP;
+                player->HP -= shmem->boss_monster3.Monster_OP;
                 shmem->Host_HP = player->HP;
             }
             else if (random == 2) {
                 printf("보스몬스터가 강력한 공격을 합니다!\n");
                 fflush(stdout);
-                player->HP -= (shmem->boss_monster3.Monster_HP * 2);
+                player->HP -= (shmem->boss_monster3.Monster_OP * 2);
                 shmem->Host_HP = player->HP;
             }
             else {

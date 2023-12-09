@@ -231,7 +231,7 @@ ShMEM* shm_get() {
     key_t key;
     ShMEM* shmem;
 
-    key = ftok("/home/g_202211077/Teamproject/Boss", 211);
+    key = ftok("/home/g_202211077/Teamproject", 211);
     shmid = shmget(key, 1024, 0);
     if (shmid == -1) {
         perror("shmget");
