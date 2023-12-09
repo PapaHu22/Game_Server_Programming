@@ -194,6 +194,10 @@ void boss_room(Player* player, int you) {
 	shmem->boss_monster2.Monster_HP = 100;
 	shmem->boss_monster3.Monster_OP = 25;
 	shmem->boss_monster3.Monster_HP = 500;
+	shmem->maze_checkin_1 = false;
+	shmem->maze_checkin_2 = false;
+	shmem->maze_checkin_3 = false;
+	shmem->maze_checkin_4 = false;
 
 	char input;
 	bool inCombat = false; // 전투 상태 플래그
@@ -227,6 +231,48 @@ void boss_room(Player* player, int you) {
 			if (shmem->boss_monster.Monster_HP <= 0 && player->HP > 0) {
 				printf("Boss Phase2...\n");
 				boss_combat2(player, you);
+				shmem->maze_checkin_1 = true;
+				switch (shmem->User_num) {
+				case 1:
+					break;
+				case 2:
+					while (1) {
+						if (shmem->maze_checkin_1 && shmem->maze_checkin_2) {
+							break;
+						}
+						else {
+							system("cls");
+							printf("파티원들을 기다립니다.\n");
+							sleep(1);
+						}
+					}
+					break;
+				case 3:
+					while (1) {
+						if (shmem->maze_checkin_1 && shmem->maze_checkin_2 && shmem->maze_checkin_3) {
+							break;
+						}
+						else {
+							system("cls");
+							printf("파티원들을 기다립니다.\n");
+							sleep(1);
+						}
+					}
+					break;
+				case 4:
+					while (1) {
+						if (shmem->maze_checkin_1 && shmem->maze_checkin_2 && shmem->maze_checkin_3 && shmem->maze_checkin_4) {
+							break;
+						}
+						else {
+							system("cls");
+							printf("파티원들을 기다립니다.\n");
+							sleep(1);
+						}
+					}
+					break;
+
+				}
 				if (shmem->Host_HP <= 0) {
 					break;
 				}
@@ -292,26 +338,26 @@ void shop() {
 
 	while (shmem->party.Party_Coin > 0) {
 		printf("현재 코인 : %d\n", shmem->party.Party_Coin);
-		printf("포션 구입(파티원 전체 체력 20 회복) <A> [20코인]\n");
-		printf("공격력 강화 주문서 구입(파티원 전체 공격력 10 상승) <B> [100코인]\n");
-		printf("파티원 전체 최대 체력 상승 구입(파티원 전체 최대 체력 2 배 상승) <C> [200코인]\n");
+		printf("포션 구입(파티원 전체 체력 20 회복) <A> [30코인]\n");
+		printf("공격력 강화 주문서 구입(파티원 전체 공격력 10 상승) <B> [200코인]\n");
+		printf("파티원 전체 최대 체력 상승 구입(파티원 전체 최대 체력 2 배 상승) <C> [300코인]\n");
 		scanf(" %c", &input, 1);
 
 		switch (input) {
 		case 'A':
 			printf("포션 구매\n");
 			shmem->Potion++;
-			shmem->party.Party_Coin -= 20;
+			shmem->party.Party_Coin -= 30;
 			break;
 		case 'B':
 			printf("공격력 강화 구매 구매\n");
 			shmem->OP_UP++;
-			shmem->party.Party_Coin -= 100;
+			shmem->party.Party_Coin -= 200;
 			break;
 		case 'C':
 			printf("최대 체력 상스 구매\n");
 			shmem->MAX_HP_UP++;
-			shmem->party.Party_Coin -= 200;
+			shmem->party.Party_Coin -= 300;
 			break;
 		default :
 			break;

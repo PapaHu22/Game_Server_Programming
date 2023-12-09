@@ -218,6 +218,56 @@ void boss_room(Player* player, int you) {
             if (shmem->boss_monster.Monster_HP <= 0 && player->HP > 0) {
                 printf("Boss Phase2...\n");
                 boss_combat2(player, you);
+                if (you == 2) {
+                    shmem->maze_checkin_2;
+                }
+                else if (you == 3) {
+                    shmem->maze_checkin_3;
+                }
+                else if (you == 4) {
+                    shmem->maze_checkin_4;
+                }
+                switch (shmem->User_num) {
+                case 1:
+                    break;
+                case 2:
+                    while (1) {
+                        if (shmem->maze_checkin_1 && shmem->maze_checkin_2) {
+                            break;
+                        }
+                        else {
+                            system("cls");
+                            printf("파티원들을 기다립니다.\n");
+                            sleep(1);
+                        }
+                    }
+                    break;
+                case 3:
+                    while (1) {
+                        if (shmem->maze_checkin_1 && shmem->maze_checkin_2 && shmem->maze_checkin_3) {
+                            break;
+                        }
+                        else {
+                            system("cls");
+                            printf("파티원들을 기다립니다.\n");
+                            sleep(1);
+                        }
+                    }
+                    break;
+                case 4:
+                    while (1) {
+                        if (shmem->maze_checkin_1 && shmem->maze_checkin_2 && shmem->maze_checkin_3 && shmem->maze_checkin_4) {
+                            break;
+                        }
+                        else {
+                            system("cls");
+                            printf("파티원들을 기다립니다.\n");
+                            sleep(1);
+                        }
+                    }
+                    break;
+
+                }
                 if (shmem->Host_HP <= 0) {
                     break;
                 }
