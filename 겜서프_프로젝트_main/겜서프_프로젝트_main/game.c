@@ -152,8 +152,6 @@ void field_map(Player* player, int you) {
 
 		if (!inCombat && isNearMonster) {
 			inCombat = true;
-			printf("%s\n", MONSTER_ART); // 몬스터 아스키 아트 출력
-			printf("Your Health: %d, Monster's Health: %d\n", player->HP, shmem->monster.Monster_HP);
 			start_combat(player, you); // 전투 시작
             if (shmem->Host_HP <= 0) {
                 break;

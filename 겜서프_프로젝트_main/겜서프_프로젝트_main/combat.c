@@ -227,6 +227,7 @@ void boss_combat(Player* player, int you) {
 
         switch (shmem->User_num) {
         case 1:
+            printf("공격(A), 특수 공격(S),  방어(D): ");
             scanf(" %c", &choice, 1);
             break;
         case 2:
@@ -541,6 +542,7 @@ void boss_combat3(Player* player, int you) {
 
         switch (shmem->User_num) {
         case 1:
+            printf("공격(A), 특수 공격(S),  방어(D): ");
             scanf(" %c", &choice, 1);
             break;
         case 2:

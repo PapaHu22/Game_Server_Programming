@@ -9,6 +9,9 @@ void trap(int you)
     ShMEM* shmem = shm_get();
     int pid1, pid2, pid3, pid4;
     int wpid, status;
+
+    ClearLineFromReadBuffer();
+
     switch (shmem->User_num)//플레이어 수만큼 분배
     {
     case 1:
